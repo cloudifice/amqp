@@ -16,25 +16,36 @@
 
 package amqp
 
-var amqpSystems = map[string]QueueFactory
+import  (
+//  "github.com/tsuru/config"
+//  "github.com/streadway/amqp"
+)
+
 
 //queue actions
 type PubSub interface {
 
- Publish() error
- Subscribe() (chan []byte, error)
- Unsubscribe() error
+ Publish(message []byte) error
+ //Subscribe() (chan []byte, error)
+ //Unsubscribe() error
 }
 
 //queue resource actions
 type QueueFactory interface {
 
-  New()
-  Get()
-  Delete()
+  Get(name string) (PubSub, error)
+//  Get()
+//  Delete()
 }
+
+var amqpSystems = map[string]QueueFactory{"rabbitmq": &amqpInstance{}}
 
 //var with rabbitmq to register
 
 //will init and return rmq instance
-func Init() (QueueFactory, error) {}
+func Init() (QueueFactory, error) {
+
+  return &amqpInstance{}, nil
+
+
+}
