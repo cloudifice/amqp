@@ -4,9 +4,8 @@ import (
 
   "sync"
   "log"
-
-    "github.com/tsuru/config"
-    "github.com/streadway/amqp"
+  "github.com/tsuru/config"
+  "github.com/streadway/amqp"
 
 )
 
@@ -50,7 +49,7 @@ return nil
 //func (q *opsInstance) Unsubscribe() {}
 
 ///will return the queue instance
-func (qi *amqpInstance) Get(name string) (PubSub, error) {
+func (qi *amqpInstance) New(name string) (PubSub, error) {
   return &opsInstance{queueName: name, qi: qi}, nil
 }
 

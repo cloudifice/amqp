@@ -33,7 +33,7 @@ type PubSub interface {
 //queue resource actions
 type QueueFactory interface {
 
-  Get(name string) (PubSub, error)
+  New(name string) (PubSub, error)
 //  Get()
 //  Delete()
 }
