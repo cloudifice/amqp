@@ -57,7 +57,7 @@ func (qi *amqpInstance) dial(queueName string) (*amqp.Channel , error){
 
   amqpAddr, err := config.GetString("amqp:url") //setup on cloudifice config - cfs.yml
 	if err != nil {
-		amqpAddr = "amqp://172.17.0.3:5672/"
+		amqpAddr = "amqp://172.17.0.5:5672/"
 	}
 	conn, err := amqp.Dial(amqpAddr)
 	if err != nil {

@@ -2,7 +2,7 @@ package amqp
 
 import (
 	"testing"
-  "fmt"
+//  "fmt"
 	"gopkg.in/check.v1"
 )
 
