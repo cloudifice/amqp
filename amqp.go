@@ -43,9 +43,8 @@ var amqpSystems = map[string]QueueFactory{"rabbitmq": &amqpInstance{}}
 //var with rabbitmq to register
 
 //will init and return rmq instance
-func Init() (QueueFactory, error) {
+func Init(rmqAddress string) (QueueFactory, error) {
 
-  return &amqpInstance{}, nil
-
+  return &amqpInstance{RmqAddress: rmqAddress}, nil
 
 }

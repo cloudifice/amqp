@@ -15,7 +15,7 @@ type S struct{}
 var _ = check.Suite(&S{})
 
 func (s *S) Testdial(c *check.C) {
-	f, err := Init()
+	f, err := Init("amqp://172.17.0.5:5672/")
 	c.Assert(err, check.IsNil)
   qu, ok := f.New("test-queue")
   body := []byte("test-data")

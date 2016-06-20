@@ -4,7 +4,7 @@ import (
 
   "sync"
   "log"
-  "github.com/tsuru/config"
+//  "github.com/tsuru/config"
   "github.com/streadway/amqp"
 
 )
@@ -17,7 +17,10 @@ type opsInstance struct {
 }
 
 
-type amqpInstance struct { sync.Mutex}
+type amqpInstance struct {
+  RmqAddress string
+  sync.Mutex
+}
 
 func (q *opsInstance) Publish(message []byte) error {
 
@@ -55,16 +58,18 @@ func (qi *amqpInstance) New(name string) (PubSub, error) {
 
 func (qi *amqpInstance) dial(queueName string) (*amqp.Channel , error){
 
-  amqpAddr, err := config.GetString("amqp:url") //setup on cloudifice config - cfs.yml
+/*  amqpAddr, err := config.GetString("amqp:url") //setup on cloudifice config - cfs.yml
 	if err != nil {
 		amqpAddr = "amqp://172.17.0.5:5672/"
-	}
-	conn, err := amqp.Dial(amqpAddr)
+	} */
+
+
+	conn, err := amqp.Dial(qi.RmqAddress)
 	if err != nil {
 		return nil, err
 	}
 
-	log.Printf(" [QS] Dialed to (%s)", amqpAddr)
+	log.Printf(" [QS] Dialed to (%s)", qi.RmqAddress)
 
 	channel, err := conn.Channel()
 
@@ -79,6 +84,6 @@ func (qi *amqpInstance) dial(queueName string) (*amqp.Channel , error){
 		return nil, err
 	}
 
-	log.Printf(" [x] Connection successful to  (%s,%s)", amqpAddr, q.Name)
+	log.Printf(" [x] Connection successful to  (%s,%s)", qi.RmqAddress, q.Name)
 	return channel, err
 }
